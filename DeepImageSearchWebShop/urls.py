@@ -19,6 +19,7 @@ from django.urls import path, include
 from rest_framework import routers
 from users import views as userViews
 from goods import views as goodsViews
+from order import views as orderViews
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .settings import MEDIA_ROOT
 
@@ -28,11 +29,13 @@ router = routers.DefaultRouter()
 router.register(r'users', userViews.UserViewSet, basename='users')
 router.register(r'goods', goodsViews.ListGoodsViewSet, basename='users')
 router.register(r'indexImage', goodsViews.IndexImagesViewSet, basename='users')
+router.register(r'shopCart', orderViews.ShoppingCartViewSet, basename='shopCart')
+router.register(r'order', orderViews.OrderViewset, basename='order')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', TokenObtainPairView.as_view(), name='jwt_obtain_pair'),
     path('jwt/refresh/', TokenRefreshView.as_view(), name='jwt_refresh'),
     path('', include(router.urls)),
-    path('media/<path:path>', serve, {'document_root':MEDIA_ROOT}),
+    path('media/<path:path>', serve, {'document_root': MEDIA_ROOT}),
 ]
