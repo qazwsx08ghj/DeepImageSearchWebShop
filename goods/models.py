@@ -24,7 +24,6 @@ class Goods(models.Model):
     description = models.TextField("description for goods", max_length=10000)
 
     # 圖片區
-    image = models.ImageField(verbose_name="image", upload_to="goods/images", null=True, blank=True)
     indexImage = models.ImageField("image for goods index", upload_to="goods/indexImages", null=True, blank=True)
     # 商品新增時間
     addTime = models.DateTimeField("add time", default=datetime.datetime.now)

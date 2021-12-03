@@ -14,7 +14,6 @@ class ShoppingCartViewSet(viewsets.ModelViewSet):
     lookup_field = "goods_id"
 
     def perform_create(self, serializer):
-
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
@@ -47,7 +46,6 @@ class OrderViewset(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.Crea
         return OrderDetail.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-
         order = serializer.save()
         shopcarts = ShoppingCart.objects.filter(user=self.request.user)
         for shopCart in shopcarts:

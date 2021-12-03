@@ -1,4 +1,4 @@
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, ListModelMixin
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAdminUser
@@ -8,12 +8,15 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-class UserViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, viewsets.GenericViewSet):
+class UserViewSet(
+    ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, viewsets.GenericViewSet
+):
     serializer_class = UserRegisterSerializer
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     permission_classes_by_action = {
-        'retrieve': IsAdminUser
+        'retrieve': IsAdminUser,
+        'list': IsAdminUser
     }
 
     def create(self, request, *args, **kwargs):
@@ -29,8 +32,6 @@ class UserViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, viewse
         elif self.action == 'create':
             return UserRegisterSerializer
         return UserRegisterSerializer
-
-
 
     def get_object(self):
         return self.request.user

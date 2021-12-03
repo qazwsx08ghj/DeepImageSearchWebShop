@@ -20,22 +20,30 @@ from rest_framework import routers
 from users import views as userViews
 from goods import views as goodsViews
 from order import views as orderViews
+from transaction import views as tViews
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .settings import MEDIA_ROOT
+from rest_framework.documentation import include_docs_urls
 
 
 router = routers.DefaultRouter()
 
 router.register(r'users', userViews.UserViewSet, basename='users')
-router.register(r'goods', goodsViews.ListGoodsViewSet, basename='users')
-router.register(r'indexImage', goodsViews.IndexImagesViewSet, basename='users')
+router.register(r'goods', goodsViews.ListGoodsViewSet, basename='goods')
+router.register(r'searchImage', goodsViews.SearchImage, basename='searchImage')
+router.register(r'indexImage', goodsViews.IndexImagesViewSet, basename='indexImage')
 router.register(r'shopCart', orderViews.ShoppingCartViewSet, basename='shopCart')
 router.register(r'order', orderViews.OrderViewset, basename='order')
+router.register(r'auction', tViews.AuctionViewSet, basename='auction')
+router.register(r'bid', tViews.BidViewSet, basename='bid')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('docs/', include_docs_urls(title='docs')),
     path('login/', TokenObtainPairView.as_view(), name='jwt_obtain_pair'),
     path('jwt/refresh/', TokenRefreshView.as_view(), name='jwt_refresh'),
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
     path('media/<path:path>', serve, {'document_root': MEDIA_ROOT}),
+
 ]
