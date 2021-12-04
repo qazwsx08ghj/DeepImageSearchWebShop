@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import mixins
 from rest_framework.authentication import SessionAuthentication
 from .serializers import BidSerializer, AuctionSerializer
@@ -17,7 +17,6 @@ class AuctionViewSet(
     viewsets.GenericViewSet
 ):
     permission_classes = (IsAuthenticated,)
-    authentication_classes = (SessionAuthentication,)
     serializer_class = AuctionSerializer
     queryset = Auction.objects.all().filter(active=True)
 

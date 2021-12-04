@@ -20,8 +20,8 @@ class Goods(models.Model):
 
     # 簡述
     # 詳述
-    brief = models.TextField("brief for goods", max_length=500)
-    description = models.TextField("description for goods", max_length=10000)
+    brief = models.TextField("brief for goods", max_length=500, null=True, blank=True)
+    description = models.TextField("description for goods", max_length=10000, null=True, blank=True)
 
     # 圖片區
     indexImage = models.ImageField("image for goods index", upload_to="goods/indexImages", null=True, blank=True)

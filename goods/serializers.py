@@ -9,7 +9,6 @@ class GoodImageSerializer(serializers.ModelSerializer):
 
 
 class GoodSerializer(serializers.ModelSerializer):
-    images = GoodImageSerializer(many=True)
 
     class Meta:
         model = Goods
